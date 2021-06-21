@@ -64,10 +64,12 @@ jobs:
     steps:
       - id: check
         run: |
-          matrix='${{ needs.files.outputs }}'
-          sudo npm install -g json2yaml
-          echo "$matrix"
-          echo "$matrix" | jq .
+          added='${{ needs.files.outputs.added }}'
+          echo "$added" | jq .
+
+          removed='${{ needs.files.outputs.removed }}'
+          echo "$removed" | jq .
+
         
   # This workflow contains a single job called "build"
   import:
