@@ -35,8 +35,24 @@ jobs:
 
       - id: matrix
         run: |
-          echo "::set-output name=added::${{ steps.files.outputs.added }}"
-          echo "::set-output name=added_length::`jq -r '.' <<< '${{ steps.files.outputs.added }}' | jq length`"
+          ADDED=`jq -r '.' <<< '${{ steps.files.outputs.added }}'`
+          ADDED_LENGTH=`echo "$ADDED" | jq length`
+          
+          echo "::set-output name=added::$ADDED"
+          echo "::set-output name=added_length::$ADDED_LENGTH"
+          
+  test:
+    needs: [ files ]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest          
+    steps:
+      - id: check
+        run: |
+          matrix='${{ needs.files.outputs.added }}'
+          sudo npm install -g json2yaml
+          echo $matrix
+          echo $matrix | jq .
+          echo $matrix | json2yaml          
         
   # This workflow contains a single job called "build"
   import:
@@ -48,6 +64,7 @@ jobs:
       run:
         shell: bash
     strategy:
+      fail-fast: false
       matrix:
         file: ${{ fromJson(needs.files.outputs.added) }}
       
