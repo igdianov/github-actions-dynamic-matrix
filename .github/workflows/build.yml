@@ -60,7 +60,6 @@ jobs:
           sudo npm install -g json2yaml
           echo "$matrix"
           echo "$matrix" | jq .
-          echo "$matrix" | json2yaml | true    
         
   # This workflow contains a single job called "build"
   import:
