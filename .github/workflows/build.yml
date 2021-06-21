@@ -124,4 +124,3 @@ jobs:
           FILE: ${{ matrix.file }}
         run: |
           echo "Delete $FILE"
-          cat "$FILE"
