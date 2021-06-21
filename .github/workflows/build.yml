@@ -51,7 +51,7 @@ jobs:
           REMOVED=`jq -rc '.' <<< '${{ steps.files.outputs.removed }}'`
           REMOVED_LENGTH=`echo "$REMOVED" | jq length`
 
-          echo "::set-output name=removed::$ADDED"
+          echo "::set-output name=removed::$REMOVED"
           echo "::set-output name=removed_length::$REMOVED_LENGTH"
           
   test:
